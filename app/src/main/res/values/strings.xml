@@ -1,3 +1,14 @@
 <resources>
     <string name="app_name">Mercearia da Maria</string>
+    <string name="hello">Olá,</string>
+    <string name="create_account">Criar conta</string>
+    <string name="welcome_back">Bem-vindo de volta!</string>
+    <string name="login">Entrar</string>
+    <string name="first_name">Nome</string>
+    <string name="last_name">Sobrenome</string>
+    <string name="phone">Telefone</string>
+    <string name="password">Senha</string>
+    <string name="hide_password">Esconder senha</string>
+    <string name="show_password">Mostrar senha</string>
+    <string name="register">Criar conta</string>
 </resources>
