@@ -22,4 +22,14 @@ captures/
 output.json
 
 # Log/OS Files
-*.log
+*.loglocal.properties
+# Google Services (e.g. APIs or Firebase)
+google-services.json
+# Cache e arquivos locais do Graphify
+graphify-out/
+.claude/hooks/local/
+# Arquivos de IDE pessoais / da maquina (nao compartilhar)
+/.idea/deploymentTargetSelector.xml
+/.idea/androidTestResultsUserPreferences.xml
+/.idea/appInsightsSettings.xml
+/.idea/markdown.xml

@@ -20,7 +20,7 @@ fun PrivacyPoliticsScreen() {
     }
 }
 
-@Preview
+@Preview(backgroundColor = 0xFFF, showBackground = true)
 @Composable
 fun PrivacyPoliticsScreenPreview() {
     PrivacyPoliticsScreen()
