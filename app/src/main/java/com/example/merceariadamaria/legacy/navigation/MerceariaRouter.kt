@@ -1,4 +1,4 @@
-package com.example.merceariadamaria.navigation
+package com.example.merceariadamaria.legacy.navigation
 
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf

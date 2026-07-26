@@ -1,0 +1,49 @@
+package com.example.merceariadamaria.ui.navigation
+
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
+import com.example.merceariadamaria.ui.screen.PrivacyPoliticsScreen
+import com.example.merceariadamaria.ui.screen.SignUpScreen
+import com.example.merceariadamaria.ui.screen.TermsAndConditionsScreen
+
+object Routes {
+    const val LOGIN = "login"
+    const val SIGN_UP = "sign_up"
+    const val TERMS_AND_CONDITIONS = "terms_and_conditions"
+    const val PRIVACY_POLITICS = "privacy_politics"
+}
+
+@Composable
+fun MerceariaApp() {
+    val navController = rememberNavController()
+
+    val startDestination = remember { Routes.SIGN_UP }
+
+    NavHost(
+        navController = navController,
+        startDestination = startDestination,
+        modifier = Modifier.fillMaxSize().background(Color.White)
+    ) {
+        composable(Routes.SIGN_UP) {
+            SignUpScreen(
+                onTermsAndConditions = { navController.navigate(Routes.TERMS_AND_CONDITIONS) },
+                onPrivacyPolitics = { navController.navigate(Routes.PRIVACY_POLITICS) }
+            )
+        }
+
+        composable(Routes.TERMS_AND_CONDITIONS) {
+            TermsAndConditionsScreen()
+        }
+
+        composable(Routes.PRIVACY_POLITICS) {
+            PrivacyPoliticsScreen()
+        }
+    }
+}

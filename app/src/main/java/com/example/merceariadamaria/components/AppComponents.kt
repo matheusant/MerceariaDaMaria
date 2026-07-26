@@ -30,7 +30,9 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.LinkAnnotation
 import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.TextLinkStyles
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontStyle
@@ -39,6 +41,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.withLink
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -161,10 +164,9 @@ fun PasswordTextField(labelValue: String, painterResource: Painter) {
 }
 
 @Composable
-fun CheckboxComponent(value: String, onTextSelected: (String) -> Unit) {
+fun CheckboxComponent() {
     Row(
         modifier = Modifier
-            .fillMaxWidth()
             .heightIn(56.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
@@ -175,15 +177,16 @@ fun CheckboxComponent(value: String, onTextSelected: (String) -> Unit) {
 
         Checkbox(
             checked = checked.value,
-            onCheckedChange = { checked.value != checked.value },
+            onCheckedChange = { isChecked -> checked.value = isChecked },
         )
-
-        ClickableTextComponent(onTextSelected)
     }
 }
 
 @Composable
-fun ClickableTextComponent(onTextSelected: (String) -> Unit) {
+fun ClickableTermsPoliticsTextComponent(
+    onTermsSelected: () -> Unit,
+    onPrivacyPoliticsSelected: () -> Unit
+) {
     val initialText = "Ao clicar em Criar conta, você concorda com os "
     val termOfUse = "Termos de uso"
     val andText = " e a "
@@ -191,42 +194,28 @@ fun ClickableTextComponent(onTextSelected: (String) -> Unit) {
 
     val annotatedString = buildAnnotatedString {
         append(initialText)
-        withStyle(
-            style = SpanStyle(color = Purple40)
-        ) {
-            pushStringAnnotation(
-                tag = termOfUse,
-                annotation = termOfUse
+        withLink(
+            LinkAnnotation.Clickable(
+                tag = "terms_of_use",
+                styles = TextLinkStyles(SpanStyle(color = Purple40)),
+                linkInteractionListener = { onTermsSelected() }
             )
+        ) {
             append(termOfUse)
         }
         append(andText)
-        withStyle(
-            style = SpanStyle(color = Purple40)
-        ) {
-            pushStringAnnotation(
-                tag = politics,
-                annotation = politics
+        withLink(
+            LinkAnnotation.Clickable(
+                tag = "privacy_policy",
+                styles = TextLinkStyles(SpanStyle(color = Purple40)),
+                linkInteractionListener = { onPrivacyPoliticsSelected() }
             )
+        ) {
             append(politics)
         }
     }
 
-    ClickableText(text = annotatedString, onClick = { offset ->
-        annotatedString.getStringAnnotations(offset, offset).firstOrNull()?.let { annotation ->
-            when (annotation.tag) {
-                termOfUse -> {
-                    Log.d("ClickableTextComponent", "Term of use clicked")
-                    onTextSelected(termOfUse)
-                }
-
-                politics -> {
-                    Log.d("ClickableTextComponent", "Politics clicked")
-                    onTextSelected(politics)
-                }
-            }
-        }
-    })
+    Text(text = annotatedString)
 }
 
 @Composable
@@ -249,8 +238,8 @@ fun ClickableLoginTextComponent(onTextSelected: (String) -> Unit) {
 
     ClickableText(
         modifier = Modifier
-        .fillMaxWidth()
-        .heightIn(min = 40.dp),
+            .fillMaxWidth()
+            .heightIn(min = 40.dp),
         style = TextStyle(
             fontSize = 18.sp,
             fontWeight = FontWeight.Normal,

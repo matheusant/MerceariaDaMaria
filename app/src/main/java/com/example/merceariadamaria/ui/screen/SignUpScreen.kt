@@ -1,13 +1,15 @@
-package com.example.merceariadamaria.screens
+package com.example.merceariadamaria.ui.screen
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
@@ -18,16 +20,18 @@ import com.example.merceariadamaria.R
 import com.example.merceariadamaria.components.ButtonComponent
 import com.example.merceariadamaria.components.CheckboxComponent
 import com.example.merceariadamaria.components.ClickableLoginTextComponent
+import com.example.merceariadamaria.components.ClickableTermsPoliticsTextComponent
 import com.example.merceariadamaria.components.DividerTextComponent
 import com.example.merceariadamaria.components.HeaderTextComponent
 import com.example.merceariadamaria.components.MyTextField
 import com.example.merceariadamaria.components.NormalTextComponent
 import com.example.merceariadamaria.components.PasswordTextField
-import com.example.merceariadamaria.navigation.MerceariaRouter
-import com.example.merceariadamaria.navigation.Screen
 
 @Composable
-fun SignUpScreen() {
+fun SignUpScreen(
+    onTermsAndConditions: () -> Unit,
+    onPrivacyPolitics: () -> Unit
+) {
     Surface(
         modifier = Modifier
             .fillMaxSize()
@@ -59,11 +63,20 @@ fun SignUpScreen() {
                 painterResource = painterResource(id = R.drawable.password_24)
             )
 
-            Spacer(modifier = Modifier.height(10.dp))
+            Spacer(modifier = Modifier.height(18.dp))
 
-            CheckboxComponent("", onTextSelected = {
-                MerceariaRouter.navigateTo(Screen.TermsAndConditions)
-            })
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth(),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                CheckboxComponent()
+
+                ClickableTermsPoliticsTextComponent(
+                    onTermsSelected = onTermsAndConditions,
+                    onPrivacyPoliticsSelected = onPrivacyPolitics
+                )
+            }
 
             Spacer(modifier = Modifier.height(80.dp))
 
@@ -77,7 +90,7 @@ fun SignUpScreen() {
 
             Spacer(modifier = Modifier.height(20.dp))
 
-            ClickableLoginTextComponent {  }
+            ClickableLoginTextComponent { }
         }
     }
 }
@@ -85,5 +98,5 @@ fun SignUpScreen() {
 @Preview
 @Composable
 fun SignUpScreenPreview() {
-    SignUpScreen()
+    SignUpScreen(onTermsAndConditions = {}, onPrivacyPolitics = {})
 }
