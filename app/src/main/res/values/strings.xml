@@ -11,4 +11,5 @@
     <string name="hide_password">Esconder senha</string>
     <string name="show_password">Mostrar senha</string>
     <string name="register">Criar conta</string>
+    <string name="Login">Entrar</string>
 </resources>

@@ -1,6 +1,5 @@
 package com.example.merceariadamaria.components
 
-import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
@@ -9,7 +8,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.text.ClickableText
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.Divider
 import androidx.compose.material3.Button
@@ -42,7 +40,6 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.withLink
-import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.merceariadamaria.R
@@ -219,24 +216,22 @@ fun ClickableTermsPoliticsTextComponent(
 }
 
 @Composable
-fun ClickableLoginTextComponent(onTextSelected: (String) -> Unit) {
-    val initialText = "Já tem uma conta? "
-    val login = "Entrar"
-
+fun ClickableTextComponent(initialText: String, clickableText: String, onTextSelected: () -> Unit) {
     val annotatedString = buildAnnotatedString {
         append(initialText)
-        withStyle(
-            style = SpanStyle(color = Purple40)
-        ) {
-            pushStringAnnotation(
-                tag = login,
-                annotation = login
+        withLink(
+            LinkAnnotation.Clickable(
+                tag = clickableText,
+                styles = TextLinkStyles(SpanStyle(color = Purple40)),
+                linkInteractionListener = { onTextSelected() }
             )
-            append(login)
+        ) {
+            append(clickableText)
         }
     }
 
-    ClickableText(
+    Text(
+        text = annotatedString,
         modifier = Modifier
             .fillMaxWidth()
             .heightIn(min = 40.dp),
@@ -245,18 +240,9 @@ fun ClickableLoginTextComponent(onTextSelected: (String) -> Unit) {
             fontWeight = FontWeight.Normal,
             fontStyle = FontStyle.Normal,
             textAlign = TextAlign.Center
-        ),
-        text = annotatedString,
-        onClick = { offset ->
-            annotatedString.getStringAnnotations(offset, offset).firstOrNull()?.let { annotation ->
-                when (annotation.tag) {
-                    login -> {
-                        Log.d("ClickableTextComponent", "Login clicked")
-                        onTextSelected(login)
-                    }
-                }
-            }
-        })
+
+        )
+    )
 }
 
 @Composable

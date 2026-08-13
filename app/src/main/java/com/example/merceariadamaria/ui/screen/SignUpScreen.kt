@@ -19,7 +19,7 @@ import androidx.compose.ui.unit.dp
 import com.example.merceariadamaria.R
 import com.example.merceariadamaria.components.ButtonComponent
 import com.example.merceariadamaria.components.CheckboxComponent
-import com.example.merceariadamaria.components.ClickableLoginTextComponent
+import com.example.merceariadamaria.components.ClickableTextComponent
 import com.example.merceariadamaria.components.ClickableTermsPoliticsTextComponent
 import com.example.merceariadamaria.components.DividerTextComponent
 import com.example.merceariadamaria.components.HeaderTextComponent
@@ -29,6 +29,7 @@ import com.example.merceariadamaria.components.PasswordTextField
 
 @Composable
 fun SignUpScreen(
+    onLoginSelected: () -> Unit,
     onTermsAndConditions: () -> Unit,
     onPrivacyPolitics: () -> Unit
 ) {
@@ -90,7 +91,11 @@ fun SignUpScreen(
 
             Spacer(modifier = Modifier.height(20.dp))
 
-            ClickableLoginTextComponent { }
+            ClickableTextComponent(
+                initialText = "Já tem uma conta? ",
+                clickableText = "Entrar",
+                onTextSelected = onLoginSelected
+            )
         }
     }
 }
@@ -98,5 +103,5 @@ fun SignUpScreen(
 @Preview
 @Composable
 fun SignUpScreenPreview() {
-    SignUpScreen(onTermsAndConditions = {}, onPrivacyPolitics = {})
+    SignUpScreen(onTermsAndConditions = {}, onPrivacyPolitics = {}, onLoginSelected = {})
 }

@@ -2,6 +2,7 @@ package com.example.merceariadamaria.ui.navigation
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
@@ -9,6 +10,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.example.merceariadamaria.ui.screen.LoginScreen
 import com.example.merceariadamaria.ui.screen.PrivacyPoliticsScreen
 import com.example.merceariadamaria.ui.screen.SignUpScreen
 import com.example.merceariadamaria.ui.screen.TermsAndConditionsScreen
@@ -24,17 +26,24 @@ object Routes {
 fun MerceariaApp() {
     val navController = rememberNavController()
 
-    val startDestination = remember { Routes.SIGN_UP }
+    val startDestination = remember { Routes.LOGIN }
 
     NavHost(
         navController = navController,
         startDestination = startDestination,
-        modifier = Modifier.fillMaxSize().background(Color.White)
+        modifier = Modifier.fillMaxSize().background(Color.White).statusBarsPadding()
     ) {
         composable(Routes.SIGN_UP) {
             SignUpScreen(
                 onTermsAndConditions = { navController.navigate(Routes.TERMS_AND_CONDITIONS) },
-                onPrivacyPolitics = { navController.navigate(Routes.PRIVACY_POLITICS) }
+                onPrivacyPolitics = { navController.navigate(Routes.PRIVACY_POLITICS) },
+                onLoginSelected = { navController.navigate(Routes.LOGIN) }
+            )
+        }
+
+        composable(Routes.LOGIN) {
+            LoginScreen(
+                onSignupSelected = { navController.navigate(Routes.SIGN_UP) }
             )
         }
 
