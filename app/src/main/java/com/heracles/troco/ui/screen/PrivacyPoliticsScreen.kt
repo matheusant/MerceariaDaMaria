@@ -1,4 +1,4 @@
-package com.example.merceariadamaria.ui.screen
+package com.heracles.troco.ui.screen
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -7,21 +7,21 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.merceariadamaria.components.HeaderTextComponent
+import com.heracles.troco.components.HeaderTextComponent
 
 @Composable
-fun TermsAndConditionsScreen() {
+fun PrivacyPoliticsScreen() {
     Column (
         modifier = Modifier
             .fillMaxSize()
             .padding(28.dp)
     ) {
-        HeaderTextComponent(text = "Termos de Uso")
+        HeaderTextComponent(text = "Politícas de privacidade")
     }
 }
 
 @Preview(backgroundColor = 0xFFF, showBackground = true)
 @Composable
-fun TermsAndConditionsScreenPreview() {
-    TermsAndConditionsScreen()
+fun PrivacyPoliticsScreenPreview() {
+    PrivacyPoliticsScreen()
 }

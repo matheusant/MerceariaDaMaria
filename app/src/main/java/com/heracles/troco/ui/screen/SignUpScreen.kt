@@ -1,4 +1,4 @@
-package com.example.merceariadamaria.ui.screen
+package com.heracles.troco.ui.screen
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -16,16 +16,16 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.merceariadamaria.R
-import com.example.merceariadamaria.components.ButtonComponent
-import com.example.merceariadamaria.components.CheckboxComponent
-import com.example.merceariadamaria.components.ClickableTextComponent
-import com.example.merceariadamaria.components.ClickableTermsPoliticsTextComponent
-import com.example.merceariadamaria.components.DividerTextComponent
-import com.example.merceariadamaria.components.HeaderTextComponent
-import com.example.merceariadamaria.components.MyTextField
-import com.example.merceariadamaria.components.NormalTextComponent
-import com.example.merceariadamaria.components.PasswordTextField
+import com.heracles.troco.R
+import com.heracles.troco.components.ButtonComponent
+import com.heracles.troco.components.CheckboxComponent
+import com.heracles.troco.components.ClickableTextComponent
+import com.heracles.troco.components.ClickableTermsPoliticsTextComponent
+import com.heracles.troco.components.DividerTextComponent
+import com.heracles.troco.components.HeaderTextComponent
+import com.heracles.troco.components.MyTextField
+import com.heracles.troco.components.NormalTextComponent
+import com.heracles.troco.components.PasswordTextField
 
 @Composable
 fun SignUpScreen(

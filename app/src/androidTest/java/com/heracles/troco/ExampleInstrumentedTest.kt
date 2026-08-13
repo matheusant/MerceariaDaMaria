@@ -1,4 +1,4 @@
-package com.example.merceariadamaria
+package com.heracles.troco
 
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4

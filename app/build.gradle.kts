@@ -4,11 +4,11 @@ plugins {
 }
 
 android {
-    namespace = "com.example.merceariadamaria"
+    namespace = "com.heracles.troco"
     compileSdk = 36
 
     defaultConfig {
-        applicationId = "com.example.merceariadamaria"
+        applicationId = "com.heracles.troco"
         minSdk = 26
         targetSdk = 36
         versionCode = 1
@@ -50,8 +50,8 @@ android {
 }
 
 dependencies {
-
     implementation(libs.androidx.core.ktx)
+    implementation(libs.androidx.core.splashscreen)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
     implementation(libs.androidx.navigation.compose)

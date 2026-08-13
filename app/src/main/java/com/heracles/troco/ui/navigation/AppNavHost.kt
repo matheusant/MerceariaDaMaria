@@ -1,4 +1,4 @@
-package com.example.merceariadamaria.ui.navigation
+package com.heracles.troco.ui.navigation
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxSize
@@ -10,10 +10,10 @@ import androidx.compose.ui.graphics.Color
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.example.merceariadamaria.ui.screen.LoginScreen
-import com.example.merceariadamaria.ui.screen.PrivacyPoliticsScreen
-import com.example.merceariadamaria.ui.screen.SignUpScreen
-import com.example.merceariadamaria.ui.screen.TermsAndConditionsScreen
+import com.heracles.troco.ui.screen.LoginScreen
+import com.heracles.troco.ui.screen.PrivacyPoliticsScreen
+import com.heracles.troco.ui.screen.SignUpScreen
+import com.heracles.troco.ui.screen.TermsAndConditionsScreen
 
 object Routes {
     const val LOGIN = "login"

@@ -1,4 +1,4 @@
-package com.example.merceariadamaria
+package com.heracles.troco
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -6,8 +6,8 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
-import com.example.merceariadamaria.ui.navigation.MerceariaApp
-import com.example.merceariadamaria.ui.theme.MerceariaDaMariaTheme
+import com.heracles.troco.ui.navigation.MerceariaApp
+import com.heracles.troco.ui.theme.MerceariaDaMariaTheme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

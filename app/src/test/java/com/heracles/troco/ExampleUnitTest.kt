@@ -1,4 +1,4 @@
-package com.example.merceariadamaria
+package com.heracles.troco
 
 import org.junit.Test
 

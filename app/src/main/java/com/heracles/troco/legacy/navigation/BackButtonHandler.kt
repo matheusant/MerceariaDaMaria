@@ -1,4 +1,4 @@
-package com.example.merceariadamaria.legacy.navigation
+package com.heracles.troco.legacy.navigation
 
 import androidx.activity.ComponentActivity
 import androidx.activity.OnBackPressedCallback

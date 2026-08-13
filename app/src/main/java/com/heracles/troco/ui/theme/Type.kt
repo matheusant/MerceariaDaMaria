@@ -1,4 +1,4 @@
-package com.example.merceariadamaria.ui.theme
+package com.heracles.troco.ui.theme
 
 import androidx.compose.material3.Typography
 import androidx.compose.ui.text.TextStyle

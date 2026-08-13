@@ -1,4 +1,4 @@
-package com.example.merceariadamaria.components
+package com.heracles.troco.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -42,13 +42,13 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.withLink
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.merceariadamaria.R
-import com.example.merceariadamaria.ui.theme.BgColor
-import com.example.merceariadamaria.ui.theme.Purple40
-import com.example.merceariadamaria.ui.theme.Purple80
-import com.example.merceariadamaria.ui.theme.PurpleGrey40
-import com.example.merceariadamaria.ui.theme.PurpleGrey80
-import com.example.merceariadamaria.ui.theme.TextColor
+import com.heracles.troco.R
+import com.heracles.troco.ui.theme.BgColor
+import com.heracles.troco.ui.theme.Purple40
+import com.heracles.troco.ui.theme.Purple80
+import com.heracles.troco.ui.theme.PurpleGrey40
+import com.heracles.troco.ui.theme.PurpleGrey80
+import com.heracles.troco.ui.theme.TextColor
 
 @Composable
 fun NormalTextComponent(text: String) {
