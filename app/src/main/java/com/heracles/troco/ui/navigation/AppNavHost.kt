@@ -3,6 +3,7 @@ package com.heracles.troco.ui.navigation
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.statusBarsPadding
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
@@ -31,19 +32,23 @@ fun MerceariaApp() {
     NavHost(
         navController = navController,
         startDestination = startDestination,
-        modifier = Modifier.fillMaxSize().background(Color.White).statusBarsPadding()
+        modifier = Modifier.fillMaxSize().background(MaterialTheme.colorScheme.background).statusBarsPadding()
     ) {
         composable(Routes.SIGN_UP) {
             SignUpScreen(
-                onTermsAndConditions = { navController.navigate(Routes.TERMS_AND_CONDITIONS) },
-                onPrivacyPolitics = { navController.navigate(Routes.PRIVACY_POLITICS) },
-                onLoginSelected = { navController.navigate(Routes.LOGIN) }
+                onLoginSelected = {
+                    navController.navigate(Routes.LOGIN) {
+                        popUpTo(navController.graph.id) { inclusive = true }
+                        launchSingleTop = true
+                    }
+                }
             )
         }
 
         composable(Routes.LOGIN) {
             LoginScreen(
-                onSignupSelected = { navController.navigate(Routes.SIGN_UP) }
+                onSignupSelected = { navController.navigate(Routes.SIGN_UP) },
+                onSignIn = {}
             )
         }
 

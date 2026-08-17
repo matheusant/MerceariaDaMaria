@@ -10,33 +10,87 @@ import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext
 
-private val DarkColorScheme = darkColorScheme(
-    primary = Purple80,
-    secondary = PurpleGrey80,
-    tertiary = Pink80
+private val LightColorScheme = lightColorScheme(
+    // Primary (verde mercearia)
+    primary = GreenPrimary,
+    onPrimary = GreenOnPrimary,
+    primaryContainer = GreenContainer,
+    onPrimaryContainer = OnGreenContainer,
+
+    // Secondary (terracotta — fiado, ações secundárias)
+    secondary = TerracottaSecondary,
+    onSecondary = TerracottaOnSecondary,
+    secondaryContainer = TerracottaContainer,
+    onSecondaryContainer = OnTerracottaContainer,
+
+    // Tertiary (reusa terracotta como accent extra)
+    tertiary = TerracottaSecondary,
+    onTertiary = TerracottaOnSecondary,
+    tertiaryContainer = TerracottaContainer,
+    onTertiaryContainer = OnTerracottaContainer,
+
+    // Background & Surface
+    background = LightBackground,
+    onBackground = LightOnSurface,
+    surface = LightSurface,
+    onSurface = LightOnSurface,
+    surfaceVariant = LightSurfaceVariant,
+    onSurfaceVariant = LightOnSurfaceVariant,
+
+    // Error
+    error = ErrorLight,
+    onError = GreenOnPrimary,
+    errorContainer = ErrorContainerLight,
+    onErrorContainer = ErrorLight,
+
+    // Outline
+    outline = LightOutline,
+    outlineVariant = LightSurfaceVariant,
 )
 
-private val LightColorScheme = lightColorScheme(
-    primary = Purple40,
-    secondary = PurpleGrey40,
-    tertiary = Pink40
+private val DarkColorScheme = darkColorScheme(
+    // Primary (verde claro para dark)
+    primary = GreenPrimaryDark,
+    onPrimary = GreenOnPrimaryDark,
+    primaryContainer = GreenContainerDark,
+    onPrimaryContainer = OnGreenContainerDark,
 
-    /* Other default colors to override
-    background = Color(0xFFFFFBFE),
-    surface = Color(0xFFFFFBFE),
-    onPrimary = Color.White,
-    onSecondary = Color.White,
-    onTertiary = Color.White,
-    onBackground = Color(0xFF1C1B1F),
-    onSurface = Color(0xFF1C1B1F),
-    */
+    // Secondary (terracotta claro para dark)
+    secondary = TerracottaSecondaryDark,
+    onSecondary = TerracottaOnSecondaryDark,
+    secondaryContainer = TerracottaContainerDark,
+    onSecondaryContainer = OnTerracottaContainerDark,
+
+    // Tertiary
+    tertiary = TerracottaSecondaryDark,
+    onTertiary = TerracottaOnSecondaryDark,
+    tertiaryContainer = TerracottaContainerDark,
+    onTertiaryContainer = OnTerracottaContainerDark,
+
+    // Background & Surface
+    background = DarkBackground,
+    onBackground = DarkOnSurface,
+    surface = DarkSurface,
+    onSurface = DarkOnSurface,
+    surfaceVariant = DarkSurfaceVariant,
+    onSurfaceVariant = DarkOnSurfaceVariant,
+
+    // Error
+    error = ErrorDark,
+    onError = ErrorContainerDark,
+    errorContainer = ErrorContainerDark,
+    onErrorContainer = ErrorDark,
+
+    // Outline
+    outline = DarkOutline,
+    outlineVariant = DarkSurfaceVariant,
 )
 
 @Composable
 fun MerceariaDaMariaTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
     // Dynamic color is available on Android 12+
-    dynamicColor: Boolean = true,
+    dynamicColor: Boolean = false,
     content: @Composable () -> Unit
 ) {
     val colorScheme = when {

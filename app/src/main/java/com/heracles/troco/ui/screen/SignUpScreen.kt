@@ -1,93 +1,114 @@
 package com.heracles.troco.ui.screen
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Surface
+import androidx.compose.foundation.layout.statusBarsPadding
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.Lock
+import androidx.compose.material.icons.outlined.Person
+import androidx.compose.material.icons.outlined.Phone
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.heracles.troco.R
 import com.heracles.troco.components.ButtonComponent
-import com.heracles.troco.components.CheckboxComponent
 import com.heracles.troco.components.ClickableTextComponent
-import com.heracles.troco.components.ClickableTermsPoliticsTextComponent
-import com.heracles.troco.components.DividerTextComponent
 import com.heracles.troco.components.HeaderTextComponent
-import com.heracles.troco.components.MyTextField
-import com.heracles.troco.components.NormalTextComponent
-import com.heracles.troco.components.PasswordTextField
+import com.heracles.troco.components.SubtitleTextComponent
+import com.heracles.troco.components.TrocoTextField
 
 @Composable
 fun SignUpScreen(
-    onLoginSelected: () -> Unit,
-    onTermsAndConditions: () -> Unit,
-    onPrivacyPolitics: () -> Unit
+    onLoginSelected: () -> Unit
 ) {
-    Surface(
+    var phone by rememberSaveable { mutableStateOf("") }
+    var name by rememberSaveable { mutableStateOf("") }
+    var lastName by rememberSaveable { mutableStateOf("") }
+    var password by rememberSaveable { mutableStateOf("") }
+    Column (
         modifier = Modifier
             .fillMaxSize()
-            .padding(28.dp),
-        color = Color.White
+            .statusBarsPadding()
+            .navigationBarsPadding()
+            .padding(24.dp),
+        verticalArrangement = Arrangement.SpaceBetween
     ) {
         Column(
-            modifier = Modifier.fillMaxSize()
+            modifier = Modifier.fillMaxWidth()
         ) {
-            NormalTextComponent(text = stringResource(R.string.hello))
             HeaderTextComponent(text = stringResource(R.string.create_account))
+            Spacer(modifier = Modifier.height(12.dp))
+            SubtitleTextComponent(text = stringResource(R.string.signup_subtitle))
 
             Spacer(modifier = Modifier.height(20.dp))
 
-            MyTextField(
-                labelValue = stringResource(R.string.first_name),
-                painterResource(id = R.drawable.person_24)
-            )
-            MyTextField(
-                labelValue = stringResource(R.string.last_name),
-                painterResource = painterResource(id = R.drawable.person_24)
-            )
-            MyTextField(
-                labelValue = stringResource(R.string.phone),
-                painterResource = painterResource(id = R.drawable.phone_24)
-            )
-            PasswordTextField(
-                labelValue = stringResource(R.string.password),
-                painterResource = painterResource(id = R.drawable.password_24)
+            TrocoTextField(
+                value = name,
+                onValueChange = { name = it },
+                label = "Nome",
+                placeholder = "Seu nome",
+                leadingIcon = Icons.Outlined.Person,
+                keyboardType = KeyboardType.Text,
+                modifier = Modifier.fillMaxWidth()
             )
 
-            Spacer(modifier = Modifier.height(18.dp))
+            Spacer(modifier = Modifier.height(16.dp))
 
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth(),
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                CheckboxComponent()
+            TrocoTextField(
+                value = lastName,
+                onValueChange = { lastName = it },
+                label = "Sobrenome",
+                placeholder = "Seu sobrenome",
+                leadingIcon = Icons.Outlined.Person,
+                keyboardType = KeyboardType.Text,
+                modifier = Modifier.fillMaxWidth()
+            )
 
-                ClickableTermsPoliticsTextComponent(
-                    onTermsSelected = onTermsAndConditions,
-                    onPrivacyPoliticsSelected = onPrivacyPolitics
-                )
-            }
+            Spacer(modifier = Modifier.height(16.dp))
 
-            Spacer(modifier = Modifier.height(80.dp))
+            TrocoTextField(
+                value = phone,
+                onValueChange = { phone = it },
+                label = stringResource(R.string.phone),
+                placeholder = stringResource(R.string.phone_placeholder),
+                leadingIcon = Icons.Outlined.Phone,
+                keyboardType = KeyboardType.Phone,
+                modifier = Modifier.fillMaxWidth()
+            )
 
+            Spacer(modifier = Modifier.height(16.dp))
+
+            TrocoTextField(
+                value = password,
+                onValueChange = { password = it },
+                isPassword = true,
+                label = stringResource(R.string.password),
+                placeholder = "Crie uma senha forte",
+                leadingIcon = Icons.Outlined.Lock,
+                keyboardType = KeyboardType.Password,
+                modifier = Modifier.fillMaxWidth()
+            )
+        }
+        Column(
+            modifier = Modifier.fillMaxWidth()
+        ) {
             ButtonComponent(
                 value = stringResource(R.string.register),
+                onClick = {}
             )
-
-            Spacer(modifier = Modifier.height(20.dp))
-
-            DividerTextComponent()
 
             Spacer(modifier = Modifier.height(20.dp))
 
@@ -100,8 +121,8 @@ fun SignUpScreen(
     }
 }
 
-@Preview
+@Preview(showBackground = true)
 @Composable
 fun SignUpScreenPreview() {
-    SignUpScreen(onTermsAndConditions = {}, onPrivacyPolitics = {}, onLoginSelected = {})
+    SignUpScreen(onLoginSelected = {})
 }
