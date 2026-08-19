@@ -46,13 +46,13 @@ val OnTerracottaContainerDark = Color(0xFFFADAD2)
 // NEUTRALS & SURFACES
 // ═══════════════════════════════════════
 val LightBackground = Color(0xFFFDFBF7)
-val LightSurface = Color(0xFFFDFBF7)
+val LightSurface = Color(0xFFFFFFFF)
 val LightSurfaceVariant = Color(0xFFEAE3D2)
 val LightOnSurface = Color(0xFF1E2B22)
 val LightOnSurfaceVariant = Color(0xFF5C6B5E)
 val LightOutline = Color(0xFF8D9A8F)
 
-val DarkBackground = Color(0xFF1C1B1F)
+val DarkBackground = Color(0xFF121214)
 val DarkSurface = Color(0xFF1C1B1F)
 val DarkSurfaceVariant = Color(0xFF36343B)
 val DarkOnSurface = Color(0xFFE6E1E5)
