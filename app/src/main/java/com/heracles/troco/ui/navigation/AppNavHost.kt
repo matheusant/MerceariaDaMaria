@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.displayCutoutPadding
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -43,9 +44,13 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.heracles.troco.R
+import com.heracles.troco.domain.model.Transaction
+import com.heracles.troco.domain.model.TransactionItem
+import com.heracles.troco.domain.model.TransactionType
 import com.heracles.troco.ui.screen.CatalogScreen
 import com.heracles.troco.ui.screen.LoginScreen
 import com.heracles.troco.ui.screen.MeuFiadoScreen
+import com.heracles.troco.ui.screen.MeuFiadoUiState
 import com.heracles.troco.ui.screen.PrivacyPoliticsScreen
 import com.heracles.troco.ui.screen.SignUpScreen
 import com.heracles.troco.ui.screen.TermsAndConditionsScreen
@@ -98,8 +103,9 @@ fun MerceariaApp() {
                 .fillMaxSize()
                 .background(MaterialTheme.colorScheme.background)
                 .displayCutoutPadding()
+                .navigationBarsPadding()
                 .padding(
-                    top = innerPadding.calculateTopPadding() - 16.dp,
+                    top = innerPadding.calculateTopPadding(),
                     bottom = innerPadding.calculateBottomPadding()
                 )
                 .pointerInput(Unit) {
@@ -147,7 +153,48 @@ fun MerceariaApp() {
                 }
 
                 composable(Routes.MEU_FIADO) {
-                    MeuFiadoScreen()
+                    MeuFiadoScreen(
+                        state = MeuFiadoUiState(
+                            balance = "R$ 42,90",
+                            dueDate = "11 de maio de 2026",
+                            transactions = listOf(
+                                Transaction(
+                                    title = "2x Café Torrado 500g, 1x Açucar 500g",
+                                    formattedDate = "Hoje às 09:12",
+                                    details = listOf(
+                                        TransactionItem(
+                                            name = "2x Café Torrado 500g",
+                                            subtotal = "39,90"
+                                        ),
+                                        TransactionItem(
+                                            name = "1x Açucar 500g",
+                                            subtotal = "3,00"
+                                        )
+                                    ),
+                                    amount = "- R$ 42,90",
+                                    type = TransactionType.PURCHASE
+                                ),
+                                Transaction(
+                                    title = "Pagamento parcial em dinheiro",
+                                    formattedDate = "Hoje às 15:00",
+                                    amount = "+ R$ 20,00",
+                                    type = TransactionType.PAYMENT
+                                ),
+                                Transaction(
+                                    title = "1x Açucar 500g",
+                                    formattedDate = "Hoje às 16:15",
+                                    details = listOf(
+                                        TransactionItem(
+                                            name = "1x Açucar 500g",
+                                            subtotal = "6,90"
+                                        )
+                                    ),
+                                    amount = "- R$ 6,90",
+                                    type = TransactionType.PURCHASE
+                                )
+                            )
+                        )
+                    )
                 }
 
                 composable(Routes.TERMS_AND_CONDITIONS) {
