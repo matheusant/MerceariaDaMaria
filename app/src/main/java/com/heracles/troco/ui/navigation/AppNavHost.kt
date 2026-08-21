@@ -22,6 +22,8 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -38,6 +40,7 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -55,6 +58,7 @@ import com.heracles.troco.ui.screen.PrivacyPoliticsScreen
 import com.heracles.troco.ui.screen.SignUpScreen
 import com.heracles.troco.ui.screen.TermsAndConditionsScreen
 import com.heracles.troco.ui.theme.RubikFontFamily
+import com.heracles.troco.ui.viewmodel.SignupViewModel
 
 object Routes {
     const val LOGIN = "login"
@@ -66,13 +70,15 @@ object Routes {
 }
 
 @Composable
-fun MerceariaApp() {
+fun MerceariaApp(
+    signUpViewModel: SignupViewModel = hiltViewModel()
+) {
     val focusManger = LocalFocusManager.current
     val navController = rememberNavController()
     val navBarStackEntry by navController.currentBackStackEntryAsState()
     val currentRoute = navBarStackEntry?.destination?.route
 
-    val startDestination = remember { Routes.CATALOG }
+    val startDestination = remember { Routes.SIGN_UP }
 
     val bottomBarItems = listOf(
         BarItem.Catalog,
@@ -119,7 +125,23 @@ fun MerceariaApp() {
                     .padding(horizontal = 20.dp)
             ) {
                 composable(Routes.SIGN_UP) {
+                    val signUpState by signUpViewModel.uiState.collectAsState()
+
+                    LaunchedEffect(signUpState.autenticado) {
+                        if (signUpState.autenticado) {
+                            navController.navigate(Routes.CATALOG) {
+                                popUpTo(Routes.SIGN_UP) { inclusive = true }
+                                launchSingleTop = true
+                            }
+                        }
+                    }
                     SignUpScreen(
+                        state = signUpState,
+                        onPhoneChange = signUpViewModel::onPhoneChange,
+                        onPasswordChange = signUpViewModel::onPasswordChange,
+                        onNameChange = signUpViewModel::onNameChange,
+                        onLastnameChange = signUpViewModel::onLastnameChange,
+                        onSignup = signUpViewModel::signUp,
                         onLoginSelected = {
                             navController.navigate(Routes.LOGIN) {
                                 popUpTo(navController.graph.id) { inclusive = true }

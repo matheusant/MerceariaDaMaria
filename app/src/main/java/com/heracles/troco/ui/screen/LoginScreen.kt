@@ -2,21 +2,16 @@ package com.heracles.troco.ui.screen
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.statusBarsPadding
-import androidx.compose.material3.Text
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Lock
-import androidx.compose.material.icons.filled.Phone
 import androidx.compose.material.icons.outlined.Lock
 import androidx.compose.material.icons.outlined.Phone
-import androidx.compose.material.icons.sharp.Lock
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -26,6 +21,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
@@ -39,6 +35,7 @@ import com.heracles.troco.components.HeaderTextComponent
 import com.heracles.troco.components.SubtitleTextComponent
 import com.heracles.troco.components.TrocoTextField
 import com.heracles.troco.ui.theme.DMSansFontFamily
+import com.heracles.troco.ui.theme.RubikFontFamily
 import com.heracles.troco.ui.theme.TerracottaSecondary
 
 @Composable
@@ -107,7 +104,18 @@ fun LoginScreen(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             ButtonComponent(
-                value = stringResource(R.string.login),
+                content = {
+                    Text(
+                        text = stringResource(R.string.login),
+                        style = TextStyle(
+                            color = MaterialTheme.colorScheme.onPrimary,
+                            fontSize = 16.sp,
+                            fontWeight = FontWeight.SemiBold,
+                            fontStyle = FontStyle.Normal,
+                            fontFamily = RubikFontFamily
+                        ),
+                    )
+                },
                 onClick = onSignIn
             )
 

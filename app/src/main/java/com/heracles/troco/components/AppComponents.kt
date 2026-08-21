@@ -45,12 +45,12 @@ import androidx.compose.ui.text.withLink
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.heracles.troco.R
+import com.heracles.troco.domain.model.PhoneVisualTransformation
 import com.heracles.troco.ui.theme.DMSansFontFamily
 import com.heracles.troco.ui.theme.DmSansBodyRegular15
 import com.heracles.troco.ui.theme.GreenContainer
 import com.heracles.troco.ui.theme.GreenPrimary
 import com.heracles.troco.ui.theme.PurpleGrey80
-import com.heracles.troco.ui.theme.RubikFontFamily
 import com.heracles.troco.ui.theme.RubikTitleBold28
 import com.heracles.troco.ui.theme.TerracottaSecondary
 import com.heracles.troco.ui.theme.TextColor
@@ -102,7 +102,9 @@ fun TrocoTextField(
     placeholder: String,
     leadingIcon: ImageVector,
     modifier: Modifier = Modifier,
+    hasError: String? = null,
     isPassword: Boolean = false,
+    isPhone: Boolean = false,
     keyboardType: KeyboardType = KeyboardType.Text
 ) {
     var passwordVisible by remember { mutableStateOf(false) }
@@ -148,6 +150,8 @@ fun TrocoTextField(
         } else null,
         visualTransformation = if (isPassword && !passwordVisible && value.isNotEmpty()) {
             PasswordVisualTransformation()
+        } else if (isPhone) {
+            PhoneVisualTransformation()
         } else {
             VisualTransformation.None
         },
@@ -159,6 +163,17 @@ fun TrocoTextField(
             bottomStart = 0.dp,
             bottomEnd = 0.dp
         ),
+        isError = !hasError.isNullOrBlank(),
+        supportingText = {
+            hasError?.let { text ->
+                Text(
+                    text = text,
+                    fontFamily = DMSansFontFamily,
+                    fontSize = 12.sp,
+                    color = MaterialTheme.colorScheme.error
+                )
+            }
+        },
         colors = TextFieldDefaults.colors(
             // Fundo
             focusedContainerColor = MaterialTheme.colorScheme.surfaceVariant,
@@ -175,7 +190,11 @@ fun TrocoTextField(
 
             // Texto digitado
             focusedTextColor = MaterialTheme.colorScheme.onSurfaceVariant,
-            unfocusedTextColor = MaterialTheme.colorScheme.onSurfaceVariant
+            unfocusedTextColor = MaterialTheme.colorScheme.onSurfaceVariant,
+
+            //Erro
+            errorIndicatorColor = MaterialTheme.colorScheme.error,
+            errorLabelColor = MaterialTheme.colorScheme.error
         )
     )
 }
@@ -309,7 +328,7 @@ fun ClickableTextComponent(
 }
 
 @Composable
-fun ButtonComponent(value: String, onClick: () -> Unit) {
+fun ButtonComponent(content: @Composable (() -> Unit), onClick: () -> Unit) {
     Button(
         onClick = onClick,
         modifier = Modifier
@@ -327,16 +346,17 @@ fun ButtonComponent(value: String, onClick: () -> Unit) {
                 ),
             contentAlignment = Alignment.Center
         ) {
-            Text(
-                text = value,
-                style = TextStyle(
-                    color = MaterialTheme.colorScheme.onPrimary,
-                    fontSize = 16.sp,
-                    fontWeight = FontWeight.SemiBold,
-                    fontStyle = FontStyle.Normal,
-                    fontFamily = RubikFontFamily
-                ),
-            )
+            content()
+//            Text(
+//                text = value,
+//                style = TextStyle(
+//                    color = MaterialTheme.colorScheme.onPrimary,
+//                    fontSize = 16.sp,
+//                    fontWeight = FontWeight.SemiBold,
+//                    fontStyle = FontStyle.Normal,
+//                    fontFamily = RubikFontFamily
+//                ),
+//            )
         }
     }
 }
