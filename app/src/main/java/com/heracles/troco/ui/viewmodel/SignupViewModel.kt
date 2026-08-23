@@ -5,7 +5,10 @@ import androidx.lifecycle.viewModelScope
 import com.heracles.troco.domain.entity.SignupEntity
 import com.heracles.troco.domain.model.AuthResult
 import com.heracles.troco.domain.model.CredsValidationResult
+import com.heracles.troco.domain.model.User
 import com.heracles.troco.domain.repository.AuthRepository
+import com.heracles.troco.domain.usecase.auth.ObserveUserUseCase
+import com.heracles.troco.domain.usecase.auth.SaveUserUseCase
 import com.heracles.troco.domain.usecase.auth.ValidateCredentialsUseCase
 import com.heracles.troco.ui.screen.AuthUiState
 import com.heracles.troco.ui.screen.SignupErrors
@@ -20,7 +23,8 @@ import javax.inject.Inject
 @HiltViewModel
 class SignupViewModel @Inject constructor(
     private val authCredential: ValidateCredentialsUseCase,
-    private val authRepository: AuthRepository
+    private val saveUserUseCase: SaveUserUseCase,
+    private val authRepository: AuthRepository,
 ) : ViewModel() {
     private val _uiState =
         MutableStateFlow(AuthUiState(autenticado = authRepository.usuarioAtual != null))
@@ -43,10 +47,22 @@ class SignupViewModel @Inject constructor(
         _uiState.update { it.copy(lastName = value, error = SignupErrors(lastName = "")) }
 
     fun signUp() = authenticatePhone { phone, password ->
-        authRepository.signupWithPhone(
+        val result = authRepository.signupWithPhone(
             phone = phone,
             password = password
         )
+
+        if (result is AuthResult.Success) {
+            saveUserUseCase(
+                User(
+                    name = _uiState.value.name,
+                    lastName = _uiState.value.lastName,
+                    phone = phone
+                )
+            )
+        }
+
+        result
     }
 
     private fun authenticatePhone(action: suspend (phone: String, password: String) -> AuthResult) {
@@ -82,7 +98,9 @@ class SignupViewModel @Inject constructor(
             }
 
             is AuthResult.Error -> _uiState.update {
-                it.copy(isLoading = false, error = SignupErrors().apply { password = result.message })
+                it.copy(
+                    isLoading = false,
+                    error = SignupErrors().apply { password = result.message })
             }
         }
     }
