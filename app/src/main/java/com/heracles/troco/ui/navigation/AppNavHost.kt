@@ -52,6 +52,7 @@ import com.heracles.troco.domain.model.TransactionItem
 import com.heracles.troco.domain.model.TransactionType
 import com.heracles.troco.ui.screen.CatalogScreen
 import com.heracles.troco.ui.screen.LoginScreen
+import com.heracles.troco.ui.screen.ManagementScreen
 import com.heracles.troco.ui.screen.MeuFiadoScreen
 import com.heracles.troco.ui.screen.MeuFiadoUiState
 import com.heracles.troco.ui.screen.PrivacyPoliticsScreen
@@ -65,6 +66,7 @@ object Routes {
     const val SIGN_UP = "sign_up"
     const val CATALOG = "catalog"
     const val MEU_FIADO = "meu_fiado"
+    const val MANAGEMENT = "management"
     const val TERMS_AND_CONDITIONS = "terms_and_conditions"
     const val PRIVACY_POLITICS = "privacy_politics"
 }
@@ -78,7 +80,7 @@ fun MerceariaApp(
     val navBarStackEntry by navController.currentBackStackEntryAsState()
     val currentRoute = navBarStackEntry?.destination?.route
 
-    val startDestination = remember { Routes.SIGN_UP }
+    val startDestination = remember { Routes.MANAGEMENT }
 
     val bottomBarItems = listOf(
         BarItem.Catalog,
@@ -87,6 +89,7 @@ fun MerceariaApp(
     val topBarItems = listOf(
         BarItem.Catalog,
         BarItem.MeuFiado,
+        BarItem.Management,
     )
 
     Scaffold(
@@ -219,6 +222,10 @@ fun MerceariaApp(
                     )
                 }
 
+                composable(Routes.MANAGEMENT) {
+                    ManagementScreen()
+                }
+
                 composable(Routes.TERMS_AND_CONDITIONS) {
                     TermsAndConditionsScreen()
                 }
@@ -332,4 +339,5 @@ fun AppBottomBar(
 sealed class BarItem(val route: String, val title: String, @param:DrawableRes val icon: Int) {
     object Catalog : BarItem(Routes.CATALOG, "Catálogo", R.drawable.ic_catalog)
     object MeuFiado : BarItem(Routes.MEU_FIADO, "Meu Fiado", R.drawable.ic_meu_fiado)
+    object Management : BarItem(Routes.MANAGEMENT, "Gerenciamento", R.drawable.ic_catalog)
 }
