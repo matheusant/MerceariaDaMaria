@@ -32,6 +32,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.heracles.troco.components.TrocoSearchBar
 import com.heracles.troco.domain.ProductAvailability
 import com.heracles.troco.domain.model.CatalogProduct
 import com.heracles.troco.ui.theme.DMSansFontFamily
@@ -85,35 +86,10 @@ fun CatalogScreen(
         modifier = Modifier
             .fillMaxSize(),
     ) {
-        OutlinedTextField(
-            value = query,
-            onValueChange = onQueryChange,
-            modifier = Modifier.fillMaxWidth(),
-            placeholder = {
-                Text(
-                    text = "Buscar produto...",
-                    color = MaterialTheme.colorScheme.onSurfaceVariant
-                )
-            },
-            leadingIcon = {
-                Icon(
-                    Icons.Default.Search,
-                    contentDescription = "Buscar",
-                    tint = MaterialTheme.colorScheme.onSurfaceVariant
-                )
-            },
-            singleLine = true,
-            shape = CircleShape,
-            colors = OutlinedTextFieldDefaults.colors(
-                focusedContainerColor = MaterialTheme.colorScheme.surface,
-                unfocusedContainerColor = MaterialTheme.colorScheme.surface,
-                focusedBorderColor = MaterialTheme.colorScheme.outlineVariant,
-                unfocusedBorderColor = MaterialTheme.colorScheme.outlineVariant,
-                focusedTextColor = MaterialTheme.colorScheme.onSurface,
-                unfocusedTextColor = MaterialTheme.colorScheme.onSurface,
-                focusedLeadingIconColor = MaterialTheme.colorScheme.onSurfaceVariant,
-                unfocusedLeadingIconColor = MaterialTheme.colorScheme.onSurfaceVariant
-            )
+        TrocoSearchBar(
+            query = query,
+            onQueryChange = onQueryChange,
+            placeholder = "Buscar produtos..."
         )
 
         Text(

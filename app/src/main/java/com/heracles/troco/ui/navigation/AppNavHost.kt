@@ -1,6 +1,7 @@
 package com.heracles.troco.ui.navigation
 
 import androidx.annotation.DrawableRes
+import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Box
@@ -11,7 +12,9 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
-import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
+import androidx.compose.material3.ExtendedFloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBar
@@ -19,8 +22,6 @@ import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.NavigationBarItemDefaults
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
-import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -56,6 +57,7 @@ import com.heracles.troco.ui.screen.ManagementScreen
 import com.heracles.troco.ui.screen.MeuFiadoScreen
 import com.heracles.troco.ui.screen.MeuFiadoUiState
 import com.heracles.troco.ui.screen.PrivacyPoliticsScreen
+import com.heracles.troco.ui.screen.ProductsScreen
 import com.heracles.troco.ui.screen.SignUpScreen
 import com.heracles.troco.ui.screen.TermsAndConditionsScreen
 import com.heracles.troco.ui.theme.RubikFontFamily
@@ -67,6 +69,7 @@ object Routes {
     const val CATALOG = "catalog"
     const val MEU_FIADO = "meu_fiado"
     const val MANAGEMENT = "management"
+    const val PRODUCTS = "products"
     const val TERMS_AND_CONDITIONS = "terms_and_conditions"
     const val PRIVACY_POLITICS = "privacy_politics"
 }
@@ -80,18 +83,18 @@ fun MerceariaApp(
     val navBarStackEntry by navController.currentBackStackEntryAsState()
     val currentRoute = navBarStackEntry?.destination?.route
 
-    val startDestination = remember { Routes.MANAGEMENT }
+    val startDestination = remember { Routes.PRODUCTS }
 
     val bottomBarItems = listOf(
         BarItem.Catalog,
-        BarItem.MeuFiado,
+        BarItem.MeuFiado
     )
     val topBarItems = listOf(
         BarItem.Catalog,
         BarItem.MeuFiado,
         BarItem.Management,
+        BarItem.Products,
     )
-
     Scaffold(
         topBar = {
             AppTopBar(
@@ -105,7 +108,7 @@ fun MerceariaApp(
                 currentRoute = currentRoute,
                 items = bottomBarItems
             )
-        }
+        },
     ) { innerPadding ->
         Box(
             modifier = Modifier
@@ -226,6 +229,16 @@ fun MerceariaApp(
                     ManagementScreen()
                 }
 
+                composable(Routes.PRODUCTS) {
+                    var searchQuery by rememberSaveable { mutableStateOf("") }
+                    ProductsScreen(
+                        query = searchQuery,
+                        onQueryChange = { newQuery ->
+                            searchQuery = newQuery
+                        }
+                    )
+                }
+
                 composable(Routes.TERMS_AND_CONDITIONS) {
                     TermsAndConditionsScreen()
                 }
@@ -254,7 +267,7 @@ fun AppTopBar(
             verticalAlignment = Alignment.CenterVertically
         ) {
             Text(
-                text = item.title,
+                text = item.topTitle,
                 style = TextStyle(
                     fontFamily = RubikFontFamily,
                     fontWeight = FontWeight.Bold,
@@ -299,12 +312,12 @@ fun AppBottomBar(
                             contentAlignment = Alignment.Center
                         ) {
                             Icon(
-                                painter = painterResource(id = item.icon),
-                                contentDescription = item.title
+                                painter = painterResource(id = item.icon!!),
+                                contentDescription = item.bottomTitle,
                             )
                         }
                     },
-                    label = { Text(item.title) },
+                    label = { Text(item.bottomTitle) },
                     selected = currentRoute == item.route,
                     onClick = {
                         if (currentRoute != item.route) {
@@ -336,8 +349,45 @@ fun AppBottomBar(
 }
 
 
-sealed class BarItem(val route: String, val title: String, @param:DrawableRes val icon: Int) {
-    object Catalog : BarItem(Routes.CATALOG, "Catálogo", R.drawable.ic_catalog)
-    object MeuFiado : BarItem(Routes.MEU_FIADO, "Meu Fiado", R.drawable.ic_meu_fiado)
-    object Management : BarItem(Routes.MANAGEMENT, "Gerenciamento", R.drawable.ic_catalog)
+sealed class BarItem(
+    val route: String,
+    val topTitle: String = "",
+    val bottomTitle: String = "",
+    @param:DrawableRes val icon: Int? = null
+) {
+    object Catalog : BarItem(
+        route = Routes.CATALOG,
+        topTitle = "Catálogo",
+        bottomTitle = "Catálogo",
+        icon = R.drawable.ic_catalog
+    )
+
+    object MeuFiado : BarItem(
+        route = Routes.MEU_FIADO,
+        topTitle = "Meu Fiado",
+        bottomTitle = "Meu Fiado",
+        icon = R.drawable.ic_meu_fiado
+    )
+
+    object Management :
+        BarItem(
+            route = Routes.MANAGEMENT,
+            topTitle = "Gerenciamento",
+            bottomTitle = "Início",
+            icon = R.drawable.ic_home
+        )
+
+    object Products : BarItem(
+        route = Routes.PRODUCTS,
+        topTitle = "Produtos",
+        bottomTitle = "Produtos",
+        icon = R.drawable.ic_mgmt_product
+    )
+
+    object Caderneta : BarItem(
+        route = Routes.MEU_FIADO,
+        topTitle = "Caderneta Fiados",
+        bottomTitle = "Caderneta",
+        icon = R.drawable.ic_mgmt_fiado
+    )
 }
