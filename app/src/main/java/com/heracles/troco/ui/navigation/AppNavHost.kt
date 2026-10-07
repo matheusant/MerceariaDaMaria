@@ -48,6 +48,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.heracles.troco.R
+import com.heracles.troco.components.TrocoAddFAB
 import com.heracles.troco.domain.model.Transaction
 import com.heracles.troco.domain.model.TransactionItem
 import com.heracles.troco.domain.model.TransactionType
@@ -95,6 +96,9 @@ fun MerceariaApp(
         BarItem.Management,
         BarItem.Products,
     )
+
+    val showFAB = currentRoute == Routes.PRODUCTS
+
     Scaffold(
         topBar = {
             AppTopBar(
@@ -109,6 +113,18 @@ fun MerceariaApp(
                 items = bottomBarItems
             )
         },
+        floatingActionButton = {
+            if (showFAB) {
+                TrocoAddFAB(
+                    onClicked = {
+                        navController.navigate(Routes.PRODUCTS) {
+                            popUpTo(navController.graph.id) { inclusive = true }
+                            launchSingleTop = true
+                        }
+                    }
+                )
+            }
+        }
     ) { innerPadding ->
         Box(
             modifier = Modifier
@@ -118,7 +134,6 @@ fun MerceariaApp(
                 .navigationBarsPadding()
                 .padding(
                     top = innerPadding.calculateTopPadding(),
-                    bottom = innerPadding.calculateBottomPadding()
                 )
                 .pointerInput(Unit) {
                     detectTapGestures(onTap = { focusManger.clearFocus() })
@@ -176,7 +191,8 @@ fun MerceariaApp(
                         query = searchQuery,
                         onQueryChange = { newQuery ->
                             searchQuery = newQuery
-                        }
+                        },
+                        scaffoldPadding = innerPadding
                     )
                 }
 
@@ -219,9 +235,82 @@ fun MerceariaApp(
                                     ),
                                     amount = "- R$ 6,90",
                                     type = TransactionType.PURCHASE
+                                ),
+                                Transaction(
+                                    title = "Pagamento parcial em dinheiro",
+                                    formattedDate = "Hoje às 15:00",
+                                    amount = "+ R$ 20,00",
+                                    type = TransactionType.PAYMENT
+                                ),
+                                Transaction(
+                                    title = "1x Açucar 500g",
+                                    formattedDate = "Hoje às 16:15",
+                                    details = listOf(
+                                        TransactionItem(
+                                            name = "1x Açucar 500g",
+                                            subtotal = "6,90"
+                                        )
+                                    ),
+                                    amount = "- R$ 6,90",
+                                    type = TransactionType.PURCHASE
+                                ),
+                                Transaction(
+                                    title = "Pagamento parcial em dinheiro",
+                                    formattedDate = "Hoje às 15:00",
+                                    amount = "+ R$ 20,00",
+                                    type = TransactionType.PAYMENT
+                                ),
+                                Transaction(
+                                    title = "1x Açucar 500g",
+                                    formattedDate = "Hoje às 16:15",
+                                    details = listOf(
+                                        TransactionItem(
+                                            name = "1x Açucar 500g",
+                                            subtotal = "6,90"
+                                        )
+                                    ),
+                                    amount = "- R$ 6,90",
+                                    type = TransactionType.PURCHASE
+                                ),
+                                Transaction(
+                                    title = "Pagamento parcial em dinheiro",
+                                    formattedDate = "Hoje às 15:00",
+                                    amount = "+ R$ 20,00",
+                                    type = TransactionType.PAYMENT
+                                ),
+                                Transaction(
+                                    title = "1x Açucar 500g",
+                                    formattedDate = "Hoje às 16:15",
+                                    details = listOf(
+                                        TransactionItem(
+                                            name = "1x Açucar 500g",
+                                            subtotal = "6,90"
+                                        )
+                                    ),
+                                    amount = "- R$ 6,90",
+                                    type = TransactionType.PURCHASE
+                                ),
+                                Transaction(
+                                    title = "Pagamento parcial em dinheiro",
+                                    formattedDate = "Hoje às 15:00",
+                                    amount = "+ R$ 20,00",
+                                    type = TransactionType.PAYMENT
+                                ),
+                                Transaction(
+                                    title = "1x Açucar 500g",
+                                    formattedDate = "Hoje às 16:15",
+                                    details = listOf(
+                                        TransactionItem(
+                                            name = "1x Açucar 500g",
+                                            subtotal = "6,90"
+                                        )
+                                    ),
+                                    amount = "- R$ 6,90",
+                                    type = TransactionType.PURCHASE
                                 )
                             )
-                        )
+                        ),
+                        scaffoldPadding = innerPadding
                     )
                 }
 
@@ -235,7 +324,8 @@ fun MerceariaApp(
                         query = searchQuery,
                         onQueryChange = { newQuery ->
                             searchQuery = newQuery
-                        }
+                        },
+                        scaffoldPadding = innerPadding
                     )
                 }
 

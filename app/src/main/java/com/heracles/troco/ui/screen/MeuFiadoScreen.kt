@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.IntrinsicSize
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
@@ -21,6 +22,9 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -59,7 +63,8 @@ import com.heracles.troco.ui.theme.RubikFontFamily
 
 @Composable
 fun MeuFiadoScreen(
-    state: MeuFiadoUiState
+    state: MeuFiadoUiState,
+    scaffoldPadding: PaddingValues
 ) {
     Column(
         modifier = Modifier
@@ -78,7 +83,7 @@ fun MeuFiadoScreen(
             if (isClear) {
                 MeuFiadoPaid()
             } else {
-                MeuFiadoTransactionList(state.transactions)
+                MeuFiadoTransactionList(state.transactions, scaffoldPadding = scaffoldPadding)
             }
         }
     }
@@ -192,7 +197,8 @@ fun MeuFiadoCard(
 
 @Composable
 fun MeuFiadoTransactionList(
-    transactions: List<Transaction>
+    transactions: List<Transaction>,
+    scaffoldPadding: PaddingValues
 ) {
     Column(
         modifier = Modifier.fillMaxWidth()
@@ -209,10 +215,11 @@ fun MeuFiadoTransactionList(
 
         Spacer(modifier = Modifier.height(12.dp))
 
-        LazyColumn(
-            modifier = Modifier
-                .fillMaxWidth()
-                .weight(1f)
+        LazyVerticalGrid(
+            columns = GridCells.Fixed(1),
+            modifier = Modifier.weight(1f),
+            contentPadding = PaddingValues(bottom = scaffoldPadding.calculateBottomPadding()),
+            verticalArrangement = Arrangement.spacedBy(12.dp)
         ) {
             items(transactions) { transaction ->
                 MeuFiadoTransactionItem(transaction)
@@ -413,6 +420,7 @@ private fun MeuFiadoScreenPreview() {
     MerceariaDaMariaTheme {
         Column(modifier = Modifier.padding(20.dp)) {
             MeuFiadoScreen(
+                scaffoldPadding = PaddingValues(),
                 state = MeuFiadoUiState(
                     balance = "R$ 54,90",
                     dueDate = "11 de maio de 2026",

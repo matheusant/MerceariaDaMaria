@@ -41,7 +41,8 @@ import com.heracles.troco.ui.theme.RubikFontFamily
 @Composable
 fun CatalogScreen(
     query: String,
-    onQueryChange: (String) -> Unit
+    onQueryChange: (String) -> Unit,
+    scaffoldPadding: PaddingValues
 ) {
     val products = listOf(
         CatalogProduct(
@@ -105,7 +106,7 @@ fun CatalogScreen(
         LazyVerticalGrid(
             columns = GridCells.Adaptive(minSize = 160.dp),
             modifier = Modifier.weight(1f),
-            contentPadding = PaddingValues(bottom = 16.dp),
+            contentPadding = PaddingValues(bottom = scaffoldPadding.calculateBottomPadding()),
             horizontalArrangement = Arrangement.spacedBy(16.dp),
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
@@ -214,6 +215,7 @@ fun CatalogStatusBadge(status: ProductAvailability) {
 private fun CatalogScreenPreview() {
     CatalogScreen(
         "",
-        {}
+        {},
+        PaddingValues()
     )
 }

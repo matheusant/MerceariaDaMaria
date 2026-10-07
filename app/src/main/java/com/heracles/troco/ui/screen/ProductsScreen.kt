@@ -24,7 +24,6 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -35,7 +34,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.heracles.troco.components.TrocoAddFAB
 import com.heracles.troco.components.TrocoSearchBar
 import com.heracles.troco.domain.model.Product
 import com.heracles.troco.domain.model.ProductStatus
@@ -48,107 +46,102 @@ import com.heracles.troco.ui.theme.RubikFontFamily
 fun ProductsScreen(
     query: String,
     onQueryChange: (String) -> Unit,
-    modifier: Modifier = Modifier
+    scaffoldPadding: PaddingValues
 ) {
-    Scaffold(
-        floatingActionButton = {
-            TrocoAddFAB() { }
-        }
-    ) { innerPadding ->
-        Column(
-            modifier = Modifier.fillMaxSize().padding(top = innerPadding.calculateTopPadding())
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+    ) {
+        val products = Products(
+            products = listOf(
+                Product(
+                    name = "Café Torrado 500g",
+                    price = "R$ 18,90",
+                    quantity = 15,
+                    status = ProductStatus.ACTIVE
+                ),
+                Product(
+                    name = "Leite Integral 1L",
+                    price = "R$ 5,49",
+                    quantity = 3,
+                    status = ProductStatus.CRITIC
+                ),
+                Product(
+                    name = "Açúcar Refinado 1kg",
+                    price = "R$ 5,10",
+                    quantity = 0,
+                    status = ProductStatus.INACTIVE
+                ),
+                Product(
+                    name = "Leite Integral 1L",
+                    price = "R$ 5,49",
+                    quantity = 3,
+                    status = ProductStatus.CRITIC
+                ),
+                Product(
+                    name = "Açúcar Refinado 1kg",
+                    price = "R$ 5,10",
+                    quantity = 0,
+                    status = ProductStatus.INACTIVE
+                ),
+                Product(
+                    name = "Leite Integral 1L",
+                    price = "R$ 5,49",
+                    quantity = 3,
+                    status = ProductStatus.CRITIC
+                ),
+                Product(
+                    name = "Açúcar Refinado 1kg",
+                    price = "R$ 5,10",
+                    quantity = 0,
+                    status = ProductStatus.INACTIVE
+                ),
+                Product(
+                    name = "Leite Integral 1L",
+                    price = "R$ 5,49",
+                    quantity = 3,
+                    status = ProductStatus.CRITIC
+                ),
+                Product(
+                    name = "Açúcar Refinado 1kg",
+                    price = "R$ 5,10",
+                    quantity = 0,
+                    status = ProductStatus.INACTIVE
+                ),
+                Product(
+                    name = "Leite Integral 1L",
+                    price = "R$ 5,49",
+                    quantity = 3,
+                    status = ProductStatus.CRITIC
+                ),
+                Product(
+                    name = "Açúcar Refinado 1kg",
+                    price = "R$ 5,10",
+                    quantity = 0,
+                    status = ProductStatus.INACTIVE
+                ),
+            )
+        )
+
+        TrocoSearchBar(
+            query = query,
+            onQueryChange = onQueryChange,
+            placeholder = "Buscar produtos..."
+        )
+
+        Spacer(modifier = Modifier.height(28.dp))
+
+        LazyVerticalGrid(
+            columns = GridCells.Fixed(1),
+            modifier = Modifier.weight(1f),
+            contentPadding = PaddingValues(bottom = scaffoldPadding.calculateBottomPadding() + 16.dp),
+            verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
-            val products = Products(
-                products = listOf(
-                    Product(
-                        name = "Café Torrado 500g",
-                        price = "R$ 18,90",
-                        quantity = 15,
-                        status = ProductStatus.ACTIVE
-                    ),
-                    Product(
-                        name = "Leite Integral 1L",
-                        price = "R$ 5,49",
-                        quantity = 3,
-                        status = ProductStatus.CRITIC
-                    ),
-                    Product(
-                        name = "Açúcar Refinado 1kg",
-                        price = "R$ 5,10",
-                        quantity = 0,
-                        status = ProductStatus.INACTIVE
-                    ),
-                    Product(
-                        name = "Leite Integral 1L",
-                        price = "R$ 5,49",
-                        quantity = 3,
-                        status = ProductStatus.CRITIC
-                    ),
-                    Product(
-                        name = "Açúcar Refinado 1kg",
-                        price = "R$ 5,10",
-                        quantity = 0,
-                        status = ProductStatus.INACTIVE
-                    ),
-                    Product(
-                        name = "Leite Integral 1L",
-                        price = "R$ 5,49",
-                        quantity = 3,
-                        status = ProductStatus.CRITIC
-                    ),
-                    Product(
-                        name = "Açúcar Refinado 1kg",
-                        price = "R$ 5,10",
-                        quantity = 0,
-                        status = ProductStatus.INACTIVE
-                    ),
-                    Product(
-                        name = "Leite Integral 1L",
-                        price = "R$ 5,49",
-                        quantity = 3,
-                        status = ProductStatus.CRITIC
-                    ),
-                    Product(
-                        name = "Açúcar Refinado 1kg",
-                        price = "R$ 5,10",
-                        quantity = 0,
-                        status = ProductStatus.INACTIVE
-                    ),
-                    Product(
-                        name = "Leite Integral 1L",
-                        price = "R$ 5,49",
-                        quantity = 3,
-                        status = ProductStatus.CRITIC
-                    ),
-                    Product(
-                        name = "Açúcar Refinado 1kg",
-                        price = "R$ 5,10",
-                        quantity = 0,
-                        status = ProductStatus.INACTIVE
-                    ),
-                )
-            )
-
-            TrocoSearchBar(
-                query = query,
-                onQueryChange = onQueryChange,
-                placeholder = "Buscar produtos..."
-            )
-
-            Spacer(modifier = Modifier.height(28.dp))
-
-            LazyVerticalGrid(
-                columns = GridCells.Fixed(1),
-                modifier = Modifier.weight(1f),
-                contentPadding = PaddingValues(bottom = innerPadding.calculateBottomPadding() + 16.dp),
-                verticalArrangement = Arrangement.spacedBy(16.dp)
-            ) {
-                items(
-                    items = products.products,
-                    key = { product -> product.id }
-                ) { product ->
-                    ProductItem(product = product)
-                }
+            items(
+                items = products.products,
+                key = { product -> product.id }
+            ) { product ->
+                ProductItem(product = product)
             }
         }
     }
@@ -265,7 +258,8 @@ private fun ProductsScreenPreview() {
         Column(modifier = Modifier.padding(16.dp)) {
             ProductsScreen(
                 query = "",
-                onQueryChange = {}
+                onQueryChange = {},
+                scaffoldPadding = PaddingValues()
             )
         }
     }
