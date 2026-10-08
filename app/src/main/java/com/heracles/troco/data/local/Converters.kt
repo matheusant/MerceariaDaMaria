@@ -12,6 +12,6 @@ class Converters {
 
     @TypeConverter
     fun toProductStatus(value: String): ProductStatus {
-        return ProductStatus.valueOf(value)
+        return ProductStatus.fromLabel(value)
     }
 }

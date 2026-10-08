@@ -35,16 +35,17 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.heracles.troco.components.TrocoSearchBar
+import com.heracles.troco.components.formatMoney
 import com.heracles.troco.domain.model.Product
 import com.heracles.troco.domain.model.ProductStatus
-import com.heracles.troco.domain.model.Products
 import com.heracles.troco.ui.theme.DMSansFontFamily
-import com.heracles.troco.ui.theme.TrocoTheme
 import com.heracles.troco.ui.theme.RubikFontFamily
+import com.heracles.troco.ui.theme.TrocoTheme
 
 @Composable
 fun ProductsScreen(
-    query: String,
+    state: ProductsListUiState,
+    searchResults: List<Product>,
     onQueryChange: (String) -> Unit,
     scaffoldPadding: PaddingValues
 ) {
@@ -52,79 +53,8 @@ fun ProductsScreen(
         modifier = Modifier
             .fillMaxSize()
     ) {
-        val products = Products(
-            products = listOf(
-                Product(
-                    name = "Café Torrado 500g",
-                    price = "R$ 18,90",
-                    quantity = 15,
-                    status = ProductStatus.ACTIVE
-                ),
-                Product(
-                    name = "Leite Integral 1L",
-                    price = "R$ 5,49",
-                    quantity = 3,
-                    status = ProductStatus.CRITIC
-                ),
-                Product(
-                    name = "Açúcar Refinado 1kg",
-                    price = "R$ 5,10",
-                    quantity = 0,
-                    status = ProductStatus.INACTIVE
-                ),
-                Product(
-                    name = "Leite Integral 1L",
-                    price = "R$ 5,49",
-                    quantity = 3,
-                    status = ProductStatus.CRITIC
-                ),
-                Product(
-                    name = "Açúcar Refinado 1kg",
-                    price = "R$ 5,10",
-                    quantity = 0,
-                    status = ProductStatus.INACTIVE
-                ),
-                Product(
-                    name = "Leite Integral 1L",
-                    price = "R$ 5,49",
-                    quantity = 3,
-                    status = ProductStatus.CRITIC
-                ),
-                Product(
-                    name = "Açúcar Refinado 1kg",
-                    price = "R$ 5,10",
-                    quantity = 0,
-                    status = ProductStatus.INACTIVE
-                ),
-                Product(
-                    name = "Leite Integral 1L",
-                    price = "R$ 5,49",
-                    quantity = 3,
-                    status = ProductStatus.CRITIC
-                ),
-                Product(
-                    name = "Açúcar Refinado 1kg",
-                    price = "R$ 5,10",
-                    quantity = 0,
-                    status = ProductStatus.INACTIVE
-                ),
-                Product(
-                    name = "Leite Integral 1L",
-                    price = "R$ 5,49",
-                    quantity = 3,
-                    status = ProductStatus.CRITIC
-                ),
-                Product(
-                    name = "Açúcar Refinado 1kg",
-                    price = "R$ 5,10",
-                    quantity = 0,
-                    status = ProductStatus.INACTIVE
-                ),
-            )
-        )
-
         TrocoSearchBar(
-            query = query,
+            query = state.query,
             onQueryChange = onQueryChange,
             placeholder = "Buscar produtos..."
         )
@@ -138,7 +68,7 @@ fun ProductsScreen(
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
             items(
-                items = products.products,
+                items = searchResults,
                 key = { product -> product.id }
             ) { product ->
                 ProductItem(product = product)
@@ -193,7 +123,7 @@ fun ProductItem(
                     modifier = Modifier.padding(bottom = 4.dp)
                 )
                 Text(
-                    text = product.price,
+                    text = product.price.formatMoney(),
                     style = TextStyle(
                         fontFamily = DMSansFontFamily,
                         fontWeight = FontWeight.Bold,
@@ -257,9 +187,29 @@ private fun ProductsScreenPreview() {
     TrocoTheme {
         Column(modifier = Modifier.padding(16.dp)) {
             ProductsScreen(
-                query = "",
+                state = ProductsListUiState(),
                 onQueryChange = {},
-                scaffoldPadding = PaddingValues()
+                scaffoldPadding = PaddingValues(),
+                searchResults = listOf(
+                    Product(
+                        name = "Café Torrado 500g",
+                        price = "18.90",
+                        quantity = 15,
+                        status = ProductStatus.ACTIVE
+                    ),
+                    Product(
+                        name = "Leite Integral 1L",
+                        price = "5.49",
+                        quantity = 3,
+                        status = ProductStatus.CRITIC
+                    ),
+                    Product(
+                        name = "Açúcar Refinado 1kg",
+                        price = "5.10",
+                        quantity = 0,
+                        status = ProductStatus.INACTIVE
+                    ),
+                )
             )
         }
     }

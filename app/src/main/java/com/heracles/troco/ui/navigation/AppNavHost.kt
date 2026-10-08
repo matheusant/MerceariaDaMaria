@@ -61,6 +61,7 @@ import com.heracles.troco.ui.screen.SignUpScreen
 import com.heracles.troco.ui.screen.TermsAndConditionsScreen
 import com.heracles.troco.ui.theme.RubikFontFamily
 import com.heracles.troco.ui.viewmodel.ProductViewModel
+import com.heracles.troco.ui.viewmodel.ProductsListViewModel
 import com.heracles.troco.ui.viewmodel.SignupViewModel
 
 object Routes {
@@ -78,7 +79,8 @@ object Routes {
 @Composable
 fun MerceariaApp(
     signUpViewModel: SignupViewModel = hiltViewModel(),
-    productViewModel: ProductViewModel = hiltViewModel()
+    productViewModel: ProductViewModel = hiltViewModel(),
+    productsListViewModel: ProductsListViewModel = hiltViewModel()
 ) {
     val focusManger = LocalFocusManager.current
     val navController = rememberNavController()
@@ -320,12 +322,13 @@ fun MerceariaApp(
                 }
 
                 composable(Routes.PRODUCTS) {
-                    var searchQuery by rememberSaveable { mutableStateOf("") }
+                    val productsListState by productsListViewModel.uiState.collectAsStateWithLifecycle()
+                    val searchResults by productsListViewModel.searchResults.collectAsStateWithLifecycle()
+
                     ProductsScreen(
-                        query = searchQuery,
-                        onQueryChange = { newQuery ->
-                            searchQuery = newQuery
-                        },
+                        state = productsListState,
+                        searchResults = searchResults,
+                        onQueryChange = productsListViewModel::onSearchQueryChange,
                         scaffoldPadding = innerPadding
                     )
                 }

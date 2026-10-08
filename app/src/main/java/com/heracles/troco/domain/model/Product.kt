@@ -7,7 +7,13 @@ enum class ProductStatus(
 ) {
     ACTIVE(label = "Ativo"),
     CRITIC(label = "Critíco"),
-    INACTIVE(label = "Inativo")
+    INACTIVE(label = "Inativo");
+
+    companion object {
+        fun fromLabel(label: String): ProductStatus {
+            return entries.first { it.label == label }
+        }
+    }
 }
 
 data class Product (
@@ -16,9 +22,4 @@ data class Product (
     val price: String,
     val quantity: Int,
     val status: ProductStatus
-)
-
-
-data class Products (
-    val products: List<Product> = emptyList()
 )
