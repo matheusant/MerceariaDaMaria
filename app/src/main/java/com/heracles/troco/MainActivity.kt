@@ -8,7 +8,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import com.heracles.troco.ui.navigation.MerceariaApp
-import com.heracles.troco.ui.theme.MerceariaDaMariaTheme
+import com.heracles.troco.ui.theme.TrocoTheme
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -18,7 +18,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            MerceariaDaMariaTheme {
+            TrocoTheme {
                 MerceariaApp()
             }
         }

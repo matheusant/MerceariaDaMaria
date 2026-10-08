@@ -1,7 +1,6 @@
 package com.heracles.troco.ui.navigation
 
 import androidx.annotation.DrawableRes
-import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Box
@@ -12,9 +11,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Add
-import androidx.compose.material3.ExtendedFloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBar
@@ -42,6 +38,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -58,10 +55,12 @@ import com.heracles.troco.ui.screen.ManagementScreen
 import com.heracles.troco.ui.screen.MeuFiadoScreen
 import com.heracles.troco.ui.screen.MeuFiadoUiState
 import com.heracles.troco.ui.screen.PrivacyPoliticsScreen
+import com.heracles.troco.ui.screen.ProductScreen
 import com.heracles.troco.ui.screen.ProductsScreen
 import com.heracles.troco.ui.screen.SignUpScreen
 import com.heracles.troco.ui.screen.TermsAndConditionsScreen
 import com.heracles.troco.ui.theme.RubikFontFamily
+import com.heracles.troco.ui.viewmodel.ProductViewModel
 import com.heracles.troco.ui.viewmodel.SignupViewModel
 
 object Routes {
@@ -71,13 +70,15 @@ object Routes {
     const val MEU_FIADO = "meu_fiado"
     const val MANAGEMENT = "management"
     const val PRODUCTS = "products"
+    const val PRODUCT = "product"
     const val TERMS_AND_CONDITIONS = "terms_and_conditions"
     const val PRIVACY_POLITICS = "privacy_politics"
 }
 
 @Composable
 fun MerceariaApp(
-    signUpViewModel: SignupViewModel = hiltViewModel()
+    signUpViewModel: SignupViewModel = hiltViewModel(),
+    productViewModel: ProductViewModel = hiltViewModel()
 ) {
     val focusManger = LocalFocusManager.current
     val navController = rememberNavController()
@@ -95,9 +96,8 @@ fun MerceariaApp(
         BarItem.MeuFiado,
         BarItem.Management,
         BarItem.Products,
+        BarItem.Product,
     )
-
-    val showFAB = currentRoute == Routes.PRODUCTS
 
     Scaffold(
         topBar = {
@@ -114,15 +114,16 @@ fun MerceariaApp(
             )
         },
         floatingActionButton = {
-            if (showFAB) {
-                TrocoAddFAB(
-                    onClicked = {
-                        navController.navigate(Routes.PRODUCTS) {
-                            popUpTo(navController.graph.id) { inclusive = true }
-                            launchSingleTop = true
+            when (currentRoute) {
+                Routes.PRODUCTS -> {
+                    TrocoAddFAB(
+                        onClicked = {
+                            navController.navigate(Routes.PRODUCT) {
+                                launchSingleTop = true
+                            }
                         }
-                    }
-                )
+                    )
+                }
             }
         }
     ) { innerPadding ->
@@ -329,6 +330,19 @@ fun MerceariaApp(
                     )
                 }
 
+                composable(Routes.PRODUCT) {
+                    val productState by productViewModel.uiState.collectAsStateWithLifecycle()
+                    ProductScreen(
+                        scaffoldPaddingValues = innerPadding,
+                        productState = productState,
+                        onProdNameChange = productViewModel::onProdNameChange,
+                        onProdPriceChange = productViewModel::onProdPriceChange,
+                        onProdQuantityChange = productViewModel::onProdQuantityChange,
+                        onAvailabilityChange = productViewModel::onAvailabilityChange,
+                        onSave = productViewModel::addProduct
+                    )
+                }
+
                 composable(Routes.TERMS_AND_CONDITIONS) {
                     TermsAndConditionsScreen()
                 }
@@ -472,6 +486,11 @@ sealed class BarItem(
         topTitle = "Produtos",
         bottomTitle = "Produtos",
         icon = R.drawable.ic_mgmt_product
+    )
+
+    object Product : BarItem(
+        route = Routes.PRODUCT,
+        topTitle = "Novo Produto",
     )
 
     object Caderneta : BarItem(

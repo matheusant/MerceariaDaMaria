@@ -21,11 +21,9 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
-import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Divider
@@ -58,7 +56,7 @@ import com.heracles.troco.domain.model.Transaction
 import com.heracles.troco.domain.model.TransactionItem
 import com.heracles.troco.domain.model.TransactionType
 import com.heracles.troco.ui.theme.DMSansFontFamily
-import com.heracles.troco.ui.theme.MerceariaDaMariaTheme
+import com.heracles.troco.ui.theme.TrocoTheme
 import com.heracles.troco.ui.theme.RubikFontFamily
 
 @Composable
@@ -417,7 +415,7 @@ fun MeuFiadoTransactionItemDetails(details: List<TransactionItem>) {
 @Preview(showBackground = true)
 @Composable
 private fun MeuFiadoScreenPreview() {
-    MerceariaDaMariaTheme {
+    TrocoTheme {
         Column(modifier = Modifier.padding(20.dp)) {
             MeuFiadoScreen(
                 scaffoldPadding = PaddingValues(),

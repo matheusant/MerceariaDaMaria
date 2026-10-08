@@ -39,7 +39,7 @@ import com.heracles.troco.domain.model.Product
 import com.heracles.troco.domain.model.ProductStatus
 import com.heracles.troco.domain.model.Products
 import com.heracles.troco.ui.theme.DMSansFontFamily
-import com.heracles.troco.ui.theme.MerceariaDaMariaTheme
+import com.heracles.troco.ui.theme.TrocoTheme
 import com.heracles.troco.ui.theme.RubikFontFamily
 
 @Composable
@@ -254,7 +254,7 @@ fun ProductStatusBadge(
 @Preview(showBackground = true)
 @Composable
 private fun ProductsScreenPreview() {
-    MerceariaDaMariaTheme {
+    TrocoTheme {
         Column(modifier = Modifier.padding(16.dp)) {
             ProductsScreen(
                 query = "",

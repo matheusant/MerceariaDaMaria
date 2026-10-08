@@ -34,7 +34,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.heracles.troco.R
 import com.heracles.troco.ui.theme.DMSansFontFamily
-import com.heracles.troco.ui.theme.MerceariaDaMariaTheme
+import com.heracles.troco.ui.theme.TrocoTheme
 import com.heracles.troco.ui.theme.RubikFontFamily
 
 @Composable
@@ -231,7 +231,7 @@ fun ManagementSummaryItem(
 @Preview(showBackground = true)
 @Composable
 private fun ManagementScreenPreview() {
-    MerceariaDaMariaTheme {
+    TrocoTheme {
         Box(modifier = Modifier.padding(16.dp)) {
             ManagementScreen()
         }

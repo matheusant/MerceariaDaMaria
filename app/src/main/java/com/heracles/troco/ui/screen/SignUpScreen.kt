@@ -15,11 +15,8 @@ import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontStyle
@@ -66,7 +63,7 @@ fun SignUpScreen(
                 onValueChange = onNameChange,
                 label = "Nome",
                 placeholder = "Seu nome",
-                leadingIcon = Icons.Outlined.Person,
+                leadingIcon = rememberVectorPainter(image = Icons.Outlined.Person),
                 keyboardType = KeyboardType.Text,
                 hasError = state.error.name,
                 modifier = Modifier.fillMaxWidth()
@@ -79,7 +76,7 @@ fun SignUpScreen(
                 onValueChange = onLastnameChange,
                 label = "Sobrenome",
                 placeholder = "Seu sobrenome",
-                leadingIcon = Icons.Outlined.Person,
+                leadingIcon = rememberVectorPainter(image = Icons.Outlined.Person),
                 keyboardType = KeyboardType.Text,
                 hasError = state.error.lastName,
                 modifier = Modifier.fillMaxWidth()
@@ -93,7 +90,7 @@ fun SignUpScreen(
                 isPhone = true,
                 label = stringResource(R.string.phone),
                 placeholder = stringResource(R.string.phone_placeholder),
-                leadingIcon = Icons.Outlined.Phone,
+                leadingIcon = rememberVectorPainter(image = Icons.Outlined.Phone),
                 keyboardType = KeyboardType.Phone,
                 hasError = state.error.phone,
                 modifier = Modifier.fillMaxWidth()
@@ -107,7 +104,7 @@ fun SignUpScreen(
                 isPassword = true,
                 label = stringResource(R.string.password),
                 placeholder = "Crie uma senha forte",
-                leadingIcon = Icons.Outlined.Lock,
+                leadingIcon = rememberVectorPainter(image = Icons.Outlined.Lock),
                 keyboardType = KeyboardType.Password,
                 hasError = state.error.password,
                 modifier = Modifier.fillMaxWidth()

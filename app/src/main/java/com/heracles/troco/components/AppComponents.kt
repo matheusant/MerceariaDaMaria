@@ -39,7 +39,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.LinkAnnotation
 import androidx.compose.ui.text.SpanStyle
@@ -57,6 +57,7 @@ import androidx.compose.ui.text.withLink
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.heracles.troco.R
+import com.heracles.troco.domain.model.MoneyVisualTransformation
 import com.heracles.troco.domain.model.PhoneVisualTransformation
 import com.heracles.troco.ui.theme.DMSansFontFamily
 import com.heracles.troco.ui.theme.DmSansBodyRegular15
@@ -112,11 +113,12 @@ fun TrocoTextField(
     onValueChange: (String) -> Unit,
     label: String,
     placeholder: String,
-    leadingIcon: ImageVector,
+    leadingIcon: Painter,
     modifier: Modifier = Modifier,
     hasError: String? = null,
     isPassword: Boolean = false,
     isPhone: Boolean = false,
+    isMoney: Boolean = false,
     keyboardType: KeyboardType = KeyboardType.Text,
     keyboardCapitalization: KeyboardCapitalization = KeyboardCapitalization.Sentences
 ) {
@@ -140,7 +142,7 @@ fun TrocoTextField(
         },
         leadingIcon = {
             Icon(
-                imageVector = leadingIcon,
+                painter = leadingIcon,
                 contentDescription = null,
                 tint = MaterialTheme.colorScheme.onSurfaceVariant
             )
@@ -165,6 +167,8 @@ fun TrocoTextField(
             PasswordVisualTransformation()
         } else if (isPhone) {
             PhoneVisualTransformation()
+        } else if (isMoney) {
+            MoneyVisualTransformation()
         } else {
             VisualTransformation.None
         },
