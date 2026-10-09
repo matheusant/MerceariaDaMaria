@@ -1,0 +1,86 @@
+# .claudeignore — artefatos que os agents NÃO devem ler nem editar.
+# Motivo de cada bloco está comentado: sem isso, alguém "otimiza" a lista e reintroduz o risco.
+
+# ---------------------------------------------------------------------------
+# Segredos e credenciais — nunca ler, nunca editar, nunca commitar
+# ---------------------------------------------------------------------------
+local.properties
+*.jks
+*.keystore
+*.p12
+*.pem
+*.env
+.env
+.env.*
+secrets.properties
+keystore.properties
+
+# Configuração do Firebase gerada pelo Console.
+# Não é segredo (a API key é restrita por package + SHA), mas é gerada por humano no Console:
+# um agent que "conserta" este arquivo quebra o app de um jeito difícil de diagnosticar.
+# Ver CLAUDE.md §3 e §8.3.
+app/google-services.json
+google-services.json
+
+# Service account / Admin SDK — este projeto NÃO usa, e não deve passar a usar sem aprovação.
+*service-account*.json
+*firebase-adminsdk*.json
+
+# ---------------------------------------------------------------------------
+# Saídas de build — regeneradas por ./gradlew, editar é inútil e engana o diff
+# ---------------------------------------------------------------------------
+build/
+app/build/
+.gradle/
+captures/
+.cxx/
+.externalNativeBuild/
+*.apk
+*.aab
+*.ap_
+*.dex
+*.class
+output.json
+app/release/
+app/debug/
+
+# Wrapper binário do Gradle
+gradle/wrapper/gradle-wrapper.jar
+
+# ---------------------------------------------------------------------------
+# IDE e SO — ruído, específico da máquina de quem editou
+# ---------------------------------------------------------------------------
+.idea/
+*.iml
+*.iws
+*.ipr
+misc.xml
+deploymentTargetDropDown.xml
+render.experimental.xml
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# ---------------------------------------------------------------------------
+# Logs e temporários
+# ---------------------------------------------------------------------------
+*.log
+*.hprof
+*.tmp
+*.bak
+*.orig
+*.rej
+
+# ---------------------------------------------------------------------------
+# Binários grandes — nada a ganhar lendo, gasta contexto à toa
+# ---------------------------------------------------------------------------
+*.webp
+*.png
+*.jpg
+*.jpeg
+*.gif
+*.ttf
+*.otf
+*.zip
+*.jar
+*.so
